@@ -44,7 +44,7 @@
 #define WINDOW_WIDTH  800
 #define WINDOW_HEIGHT 600
 
-#define MAX_PARTICLES 1
+#define MAX_PARTICLES 100
 #define GRAVITY 0.1
 
 //X Windows variables
@@ -245,10 +245,14 @@ void movement(Game *game)
 	p->s.center.y += p->velocity.y;
 
 	//check for collision with shapes...
-	//Shape *s;
+	Shape *s = &game->box;
+	if ( p->s.center.y < s->center.y + s->height && p->s.center.x)
+	{
+		p->velocity.y = -p->velocity.y;
+	}	
 
 	//check for off-screen
-	if (p->s.center.y < 0.0) {
+	if (p->s.center.y < 0.0 || p->s.center.y > WINDOW_HEIGHT) {
 		std::cout << "off screen" << std::endl;
 		game->n = 0;
 	}
@@ -262,7 +266,7 @@ void render(Game *game)
 
 	//draw box
 	Shape *s;
-	glColor3ub(90,140,90);
+	glColor3ub(10,0,250);
 	s = &game->box;
 	glPushMatrix();
 	glTranslatef(s->center.x, s->center.y, s->center.z);

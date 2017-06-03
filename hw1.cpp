@@ -102,12 +102,13 @@ int main(void)
         init_opengl();
         //declare game object
         Game game;
+        game.n = 0;
 
         //declare a box shape
         for (int i = 0; i < 5; i++)
         {
                 game.box[i].width = 100;
-                game.box[i].height = 10;
+                game.box[i].height = 15;
                 game.box[i].center.x = 200 + i*75;              // display boxes in stair format
                 game.box[i].center.y = 500 - i*70;
         }
@@ -125,6 +126,7 @@ int main(void)
                 glXSwapBuffers(dpy, win);
         }
         cleanupXWindows();
+        cleanup_fonts();
         return 0;
 }
 
@@ -182,6 +184,7 @@ void init_opengl(void)
         glOrtho(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, -1, 1);
         //Set the screen background color
         glClearColor(1.0, 0.4117, 0.7058, 1.0);					// pink
+        glEnable(GL_TEXTURE_2D);
         initialize_fonts();
 }
 
@@ -343,6 +346,7 @@ void movement(Game *game)
 
 void render(Game *game)
 {
+        Rect r;
         float w, h;
         glClear(GL_COLOR_BUFFER_BIT);
         //Draw shapes...
@@ -406,40 +410,30 @@ void render(Game *game)
                 glPopMatrix();
         }
 
-        Rect r;
 
-        r.bot = WINDOW_HEIGHT - 100;
-        r.left = 500;
+        r.bot = WINDOW_HEIGHT - 50;
+        r.left = 100;
         r.center = 0;
-        ggprint17(&r, 0, 0x00ffffff, "3350 - Waterfall Model");
-        char arr[5][32] = {"Requirements", "Design", "Coding", "Testing", "Maintenance"};
 
-        for (int i = 0; i < 5; i++)
-        {
-                r.bot = game->box[i].center.y - 15;
-                r.left = game->box[i].center.x - 80;
-                ggprint17(&r, 0, 0x00ffff00, arr[i]);
-        }
+        
+        r.bot = game->box[0].center.y - 10;
+        r.left = game->box[0].center.x - 60;
+        ggprint16(&r, 16, 0xff0000, "Requirements");
+        
+        r.bot = game->box[1].center.y - 10;
+        r.left = game->box[1].center.x - 60;
+        ggprint16(&r, 16, 0xff4500, "Design");
 
+        r.bot = game->box[2].center.y - 10;
+        r.left = game->box[2].center.x - 60;
+        ggprint16(&r, 16, 0xffff00, "Coding");
 
+        r.bot = game->box[3].center.y - 10;
+        r.left = game->box[3].center.x - 60;
+        ggprint16(&r, 16, 0x006400, "Testing");
 
-
-
-        // Display in stair formation
-        /*for (int i = 0; i < 5; i++)
-          {
-          game->box[i].center.y - 15;
-          game->box[i].center.x - 80;
-
-
-
-         */              
-
-
-        //draw circle
-
-
-
+        r.bot = game->box[4].center.y - 10;
+        r.left = game->box[4].center.x - 60;
+        ggprint16(&r, 16, 0x0000ff, "Maintenance");
 }
-
 

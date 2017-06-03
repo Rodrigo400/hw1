@@ -40,6 +40,7 @@
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 #include <GL/glx.h>
+#include "fonts.h"
 
 #define WINDOW_WIDTH  800
 #define WINDOW_HEIGHT 600
@@ -181,6 +182,7 @@ void init_opengl(void)
         glOrtho(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, -1, 1);
         //Set the screen background color
         glClearColor(1.0, 0.4117, 0.7058, 1.0);					// pink
+        initialize_fonts();
 }
 
 #define rnd() (float)rand() / (float)RAND_MAX
@@ -403,6 +405,25 @@ void render(Game *game)
                 glEnd();
                 glPopMatrix();
         }
+
+        Rect r;
+
+        r.bot = WINDOW_HEIGHT - 100;
+        r.left = 500;
+        r.center = 0;
+        ggprint17(&r, 0, 0x00ffffff, "3350 - Waterfall Model");
+        char arr[5][32] = {"Requirements", "Design", "Coding", "Testing", "Maintenance"};
+
+        for (int i = 0; i < 5; i++)
+        {
+                r.bot = game->box[i].center.y - 15;
+                r.left = game->box[i].center.x - 80;
+                ggprint17(&r, 0, 0x00ffff00, arr[i]);
+        }
+
+
+
+
 
         // Display in stair formation
         /*for (int i = 0; i < 5; i++)

@@ -180,7 +180,7 @@ void init_opengl(void)
         //Set 2D mode (no perspective)
         glOrtho(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, -1, 1);
         //Set the screen background color
-        glClearColor(0.4117, 0.4117, 0.4117, 1.0);
+        glClearColor(1.0, 0.4117, 0.7058, 1.0);
 }
 
 #define rnd() (float)rand() / (float)RAND_MAX

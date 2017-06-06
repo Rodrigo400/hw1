@@ -180,7 +180,7 @@ void init_opengl(void)
         //Set 2D mode (no perspective)
         glOrtho(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, -1, 1);
         //Set the screen background color
-        glClearColor(1.0, 0.4117, 0.7058, 1.0);
+        glClearColor(1.0, 0.4117, 0.7058, 1.0);					// pink
 }
 
 #define rnd() (float)rand() / (float)RAND_MAX
@@ -245,6 +245,22 @@ void check_mouse(XEvent *e, Game *game)
         }
 }
 
+extern int check_b(XEvent *e, Game *game);
+/*{
+    if (e->type == KeyPress)
+    {
+	int key = XLookupKeysym(&e->xkey, 0);
+
+	if (key == XK_b)
+	{
+	    game->bubbler ^= 1;
+	}
+
+	return 0;
+    }
+}
+*/
+
 int check_keys(XEvent *e, Game *game)
 {
         //Was there input from the keyboard?
@@ -254,11 +270,13 @@ int check_keys(XEvent *e, Game *game)
                         return 1;
                 }
                 //You may check other keys here.
-                if (key == XK_b)                            // check if 'b' key was pressed for bubbler
+                /*if (key == XK_b)                            // check if 'b' key was pressed for bubbler
                 {
                         game->bubbler ^= 1;
                 }
+		*/
 
+		check_b(e, game);
 
 
         }
